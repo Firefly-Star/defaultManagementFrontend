@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LoginView from '../views/Login.vue'
+import UserView from '../views/User.vue'
 
 Vue.use(VueRouter)
 
@@ -11,10 +12,10 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/user',
+    name: 'user',
     // 路由懒加载
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: UserView
   }
 ]
 
