@@ -47,6 +47,14 @@
                         </el-input>
                     </el-form-item>
 
+                    <el-form-item v-if="!isLoginMode">
+                        <el-input v-model="form.name" auto-complete="off" placeholder="请输入姓名">
+                            <template slot="prepend">
+                                <i class="el-icon-message"></i>
+                            </template>
+                        </el-input>
+                    </el-form-item>
+
                     <el-form-item>
                         <el-button type="primary" native-type="submit" class="login-button">
                             {{ isLoginMode ? '登录' : '注册' }}
@@ -73,7 +81,8 @@
                     username: null,
                     password: null,
                     confirmPassword: null,
-                    email: null
+                    email: null,
+                    name: null
                 }
             };
         },
@@ -162,7 +171,7 @@
                             localStorage.setItem("adminToken", adminToken);
 
                             // 跳转到首页或其他页面
-                            this.$router.push({ path: '/home' });
+                            this.$router.push({ path: '/user' });
                         } else {
                             // 登录失败，显示错误信息
                             this.$message.error('账号或密码错误');
@@ -190,7 +199,8 @@
                         const requestBody = {
                             username : this.form.username,
                             password : this.form.password,
-                            email : this.form.email
+                            email : this.form.email,
+                            name : this.form.name
                         }
                         const response = await fetch("http://localhost:8080/api/auth/user/register", {
                             method: 'POST', // 使用 POST 方法
@@ -201,7 +211,7 @@
                         })
 
                         if (!response.ok){
-                            this.$message.error("登录失败");
+                            this.$message.error("注册失败");
                         }
 
                         const result = await response.json();
@@ -224,7 +234,8 @@
                         const requestBody = {
                             username : this.form.username,
                             password : this.form.password,
-                            email : this.form.email
+                            email : this.form.email,
+                            name : this.form.name
                         }
                         const response = await fetch("http://localhost:8080/api/auth/admin/register", {
                             method: 'POST', // 使用 POST 方法
@@ -235,7 +246,7 @@
                         })
     
                         if (!response.ok){
-                            this.$message.error("登录失败");
+                            this.$message.error("注册失败");
                         }
     
                         const result = await response.json();

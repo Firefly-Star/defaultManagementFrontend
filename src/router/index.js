@@ -14,7 +14,6 @@ const routes = [
   {
     path: '/user',
     name: 'user',
-    // 路由懒加载
     component: UserView
   }
 ]
