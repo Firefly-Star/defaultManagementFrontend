@@ -70,10 +70,10 @@
                 formLabelWidth: '0px',
                 form: {
                     role: '员工',
-                    username: '',
-                    password: '',
-                    confirmPassword: '',
-                    email: ''
+                    username: null,
+                    password: null,
+                    confirmPassword: null,
+                    email: null
                 }
             };
         },
@@ -81,50 +81,181 @@
             toggleMode() {
                 this.isLoginMode = !this.isLoginMode;
             },
-            handleSubmit() {
+            async handleSubmit() {
                 if (this.isLoginMode) {
                     this.handleLogin();
                 } else {
                     this.handleRegister();
                 }
             },
-            handleLogin() {
-                const { role, username, password } = this.form;
-
-                if (!username || !password) {
+            async handleLogin() {
+                if (!this.form.username || !this.form.password) {
                     this.$message.error('账号和密码不能为空');
                     return;
                 }
 
-                if (username === 'admin' && password === '123456' && role === '管理员') {
-                    console.log('管理员登录成功');
-                    this.$router.push('/admin');
-                } else if (username === 'user' && password === '123456' && role === '员工') {
-                    console.log('员工登录成功');
-                    this.$router.push('/user');
-                } else {
-                    this.$message.error('账号、密码或角色不正确');
+                if (this.form.role == "员工")
+                {
+                    try {
+                        // 从 this.form 中获取 username 和 password
+                        const requestBody = {
+                            username: this.form.username, // 假设 this.form 中有 username 字段
+                            password: this.form.password  // 假设 this.form 中有 password 字段
+                        };
+
+                        const response = await fetch("http://localhost:8080/api/auth/user/login", {
+                            method: 'POST', // 使用 POST 方法
+                            headers: {
+                                'Content-Type': 'application/json', // 设置请求体格式为 JSON
+                            },
+                            body: JSON.stringify(requestBody) // 将请求体转为 JSON 字符串
+                        });
+
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+
+                        const result = await response.json();
+                        console.log(result);
+                        if (result.status === 1) {
+                            const userToken = result.data;
+
+                            localStorage.setItem("userToken", userToken);
+
+                            // 跳转到首页或其他页面
+                            this.$router.push({ path: '/home' });
+                        } else {
+                            // 登录失败，显示错误信息
+                            this.$message.error('账号或密码错误');
+                        }
+                        
+                    } catch (error) {
+                        console.error("Error fetching reasons:", error);
+                    }
+                }
+                else
+                {
+                    try {
+                        // 从 this.form 中获取 username 和 password
+                        const requestBody = {
+                            username: this.form.username, 
+                            password: this.form.password  
+                        };
+
+                        const response = await fetch("http://localhost:8080/api/auth/admin/login", {
+                            method: 'POST', // 使用 POST 方法
+                            headers: {
+                                'Content-Type': 'application/json', // 设置请求体格式为 JSON
+                            },
+                            body: JSON.stringify(requestBody) // 将请求体转为 JSON 字符串
+                        });
+
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+
+                        const result = await response.json();
+                        console.log(result);
+                        if (result.status === 1) {
+                            const adminToken = result.data;
+
+                            localStorage.setItem("adminToken", adminToken);
+
+                            // 跳转到首页或其他页面
+                            this.$router.push({ path: '/home' });
+                        } else {
+                            // 登录失败，显示错误信息
+                            this.$message.error('账号或密码错误');
+                        }
+                        
+                    } catch (error) {
+                        console.error("Error fetching reasons:", error);
+                    }
                 }
             },
-            handleRegister() {
-                const { role, username, password, confirmPassword, email } = this.form;
-
-                if (!username || !password || !confirmPassword || !email) {
+            async handleRegister() {
+                if (!this.form.username || !this.form.password || !this.form.confirmPassword || !this.form.email) {
                     this.$message.error('账号、密码、确认密码和邮件不能为空');
                     return;
                 }
 
-                if (password !== confirmPassword) {
+                if (this.form.password !== this.form.confirmPassword) {
                     this.$message.error('两次输入的密码不一致');
                     return;
                 }
 
-                console.log(`注册成功: 账号:${username}, 角色:${role}`);
-                this.$message.success('注册成功！请登录');
-                this.isLoginMode = true;
+                if (this.form.role == "员工")
+                {
+                    try {
+                        const requestBody = {
+                            username : this.form.username,
+                            password : this.form.password,
+                            email : this.form.email
+                        }
+                        const response = await fetch("http://localhost:8080/api/auth/user/register", {
+                            method: 'POST', // 使用 POST 方法
+                            headers: {
+                                'Content-Type': 'application/json', // 设置请求体格式为 JSON
+                            },
+                            body: JSON.stringify(requestBody) // 将请求体转为 JSON 字符串
+                        })
+
+                        if (!response.ok){
+                            this.$message.error("登录失败");
+                        }
+
+                        const result = await response.json();
+
+                        if (result.status == 1)
+                        {
+                            this.$message.success('注册成功！请登录');
+                            this.isLoginMode = true;
+                        }else
+                        {
+                            this.$message.error(result.message);
+                        }
+                    }catch(error) {
+                        console.log("Failed to register: ",error);
+                    }
+                }
+                else
+                {
+                    try {
+                        const requestBody = {
+                            username : this.form.username,
+                            password : this.form.password,
+                            email : this.form.email
+                        }
+                        const response = await fetch("http://localhost:8080/api/auth/admin/register", {
+                            method: 'POST', // 使用 POST 方法
+                            headers: {
+                                'Content-Type': 'application/json', // 设置请求体格式为 JSON
+                            },
+                            body: JSON.stringify(requestBody) // 将请求体转为 JSON 字符串
+                        })
+    
+                        if (!response.ok){
+                            this.$message.error("登录失败");
+                        }
+    
+                        const result = await response.json();
+    
+                        if (result.status == 1)
+                        {
+                            this.$message.success('注册成功！请登录');
+                            this.isLoginMode = true;
+                        }else
+                        {
+                            this.$message.error(result.message);
+                        }
+                    }catch(error) {
+                        console.log("Failed to register: ",error);
+                    }
+
+                }
             }
         }
-    };
+    }
 </script>
 
 <style scoped>
