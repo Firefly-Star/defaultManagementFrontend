@@ -1,11 +1,11 @@
 <template>
     <div id="app">
         <!-- 标题栏与退出登录 -->
-        <Header :userInfo="userInfo" title="衡泰违约客户信息管理平台-员工视图" />
+        <Header :userInfo="userInfo" title="衡泰违约客户信息管理平台-管理员视图" />
         
         <div class="container">
             <!-- 左侧菜单 -->
-            <SideMenu :activeMenu="activeMenu" @select="handleSelect" />
+            <SideMenuAdmin :activeMenu="activeMenu" @select="handleSelect" />
 
             <!--主要内容-->
             <div class="main-content">
@@ -18,17 +18,28 @@
                     />
                 </div>
 
-                <div v-if="activeMenu == '1'">
-                    <!--申请-->
-                    <ClientSearch />
+                <div v-else-if="activeMenu == '1'">
+                    <!--违规信息查询-->
+                    <ClaimInfoAdmin />
                 </div>
 
-                <div v-else-if="activeMenu == '2'">
-                    <!--违规信息查询-->
-                    <ClaimInfo />
+                <div v-if="activeMenu == '2'">
+                    <!--审核-->
+                    <ReviewView />
                 </div>
+
 
                 <div v-else-if="activeMenu == '3'">
+                    <!--违规原因维护-->
+                    <ReasonMaintenance />
+                </div>
+
+                <div v-else-if="activeMenu == '4'">
+                    <!--统计视图-->
+                    <StaticsComponent />
+                </div>
+
+                <div v-else-if="activeMenu == '5'">
                     <UserCenter 
                         :userInfo="userInfo" 
                         :passwordChangeUrl="'http://localhost:8080/api/auth/user/editPassword'" 
@@ -41,23 +52,27 @@
 
 <script>
 import Header from '../components/HeaderComponent.vue';
-import SideMenu from '../components/SideMenu.vue'; 
+import SideMenuAdmin from '../components/SideMenu2.vue'; 
 import WelcomeComponent from '../components/Welcome.vue'; 
-import ClaimInfo from '../components/ClaimInfo.vue';
+import ReasonMaintenance from '../components/ReasonMaintenance.vue';
+import ClaimInfoAdmin from '../components/ClaimInfoAdmin.vue';
 import UserCenter from '../components/UserCenter.vue';
-import ClientSearch from '../components/ClientInfo.vue';
+import StaticsComponent from '../components/Satistics.vue';
+import ReviewView from '../components/Review.vue';
 import axios from 'axios';
 
 
 export default {
-    name: 'UserView',
+    name: 'AdminView',
     components: {
         Header,
-        SideMenu,
+        SideMenuAdmin,
         WelcomeComponent ,
-        ClaimInfo,
+        ReasonMaintenance,
         UserCenter,
-        ClientSearch,
+        StaticsComponent,
+        ReviewView,
+        ClaimInfoAdmin
     },
     data() {
         return {
@@ -83,12 +98,12 @@ export default {
         async fetchUserInfo() {
             try {
                 // 从 localStorage 中获取 token
-                const token = localStorage.getItem('userToken');
+                const token = localStorage.getItem('adminToken');
                 
                 // 发送 GET 请求到后端获取用户信息
-                const response = await axios.get('http://localhost:8080/api/user/info', {
+                const response = await axios.get('http://localhost:8080/api/admin/info', {
                     headers: {
-                        'userToken': token  // 将 token 作为请求头发送
+                        'adminToken': token  // 将 token 作为请求头发送
                     }
                 });
 

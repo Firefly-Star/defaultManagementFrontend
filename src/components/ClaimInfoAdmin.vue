@@ -66,6 +66,7 @@
             <el-table-column prop="reviewTime" label="认定审核时间" width="100"></el-table-column>
             <el-table-column prop="externSeverity" label="最新外部等级" width="100"></el-table-column>
 
+            
         </el-table>
 
         <el-pagination
@@ -81,7 +82,7 @@
 
 <script>
 export default{
-    name : 'ClaimInfo',
+    name : 'ClaimInfoAdmin',
     data(){
         return {
             claimInformationFilterForm: {
@@ -98,7 +99,7 @@ export default{
             ],
             currentPage: 1,  // 当前页码
             pageSize: 5,     // 每页条数
-            total: 0         // 数据总数
+            total: 0 
         }
     },
     computed: {
@@ -113,7 +114,7 @@ export default{
         async applyClaimInformationFilter() {
             try {
                 // 从 localStorage 中获取 token
-                const token = localStorage.getItem('userToken');
+                const token = localStorage.getItem('adminToken');
 
                 // 创建请求参数
                 const params = {
@@ -128,10 +129,10 @@ export default{
                 };
 
                 // 发送 GET 请求到后端获取申请信息
-                const response = await fetch('http://localhost:8080/api/user/claims', {
+                const response = await fetch('http://localhost:8080/api/admin/claims', {
                     method: 'POST',
                     headers: {
-                        'userToken': token,
+                        'adminToken': token,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(params)
@@ -144,7 +145,7 @@ export default{
                  // 如果请求成功并且状态为 "1"
                  if (data.status === 1) {
                      this.claimInformation = data.data;  // 将返回的申请信息存入 claimInformation
-                     this.total = this.claimInformation.length;  // 设置数据总数用于分页
+                     this.total = this.claimInformation.length;
                  } else {
                      console.error('获取申请信息失败:', data.message);
                  }
@@ -155,7 +156,6 @@ export default{
         handlePageChange(page) {
             this.currentPage = page;  // 更新当前页码
         }
-        
     },
     mounted(){
         this.applyClaimInformationFilter();

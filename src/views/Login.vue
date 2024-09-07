@@ -171,7 +171,7 @@
                             localStorage.setItem("adminToken", adminToken);
 
                             // 跳转到首页或其他页面
-                            this.$router.push({ path: '/user' });
+                            this.$router.push({ path: '/admin' });
                         } else {
                             // 登录失败，显示错误信息
                             this.$message.error('账号或密码错误');

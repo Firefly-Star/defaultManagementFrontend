@@ -185,6 +185,9 @@ export default {
                 console.error("Error fetching reasons:", error);
             }
         },
+    },
+    mounted(){
+        this.applyDefaultReasonFilter();
     }
 
 }
