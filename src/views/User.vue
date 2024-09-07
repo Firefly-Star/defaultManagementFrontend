@@ -10,6 +10,7 @@
             <!--主要内容-->
             <div class="main-content">
                 <div v-if="activeMenu == '0'">
+                    <!--欢迎界面-->
                     <WelcomeComponent 
                         :userInfo="userInfo" 
                         :pendingTasks="pendingTasks" 
@@ -18,12 +19,20 @@
                 </div>
 
                 <div v-if="activeMenu == '5'">
+                    <!--信息查询-->
                     <ClaimInfo />
                 </div>
 
                 <div v-else-if="activeMenu === '6'">
                     <!--违规原因维护-->
                     <ReasonMaintenance />
+                </div>
+
+                <div v-else-if="activeMenu === '8'">
+                    <UserCenter 
+                        :userInfo="userInfo" 
+                        :passwordChangeUrl="'http://localhost:8080/api/auth/user/editPassword'" 
+                    />
                 </div>
 
             </div>
@@ -37,6 +46,7 @@ import SideMenu from '../components/SideMenu.vue';
 import WelcomeComponent from '../components/Welcome.vue'; 
 import ReasonMaintenance from '../components/ReasonMaintenance.vue';
 import ClaimInfo from '../components/ClaimInfo.vue';
+import UserCenter from '../components/UserCenter.vue';
 import axios from 'axios';
 
 export default {
@@ -46,7 +56,8 @@ export default {
         SideMenu,
         WelcomeComponent ,
         ReasonMaintenance,
-        ClaimInfo
+        ClaimInfo,
+        UserCenter
     },
     data() {
         return {
@@ -62,6 +73,7 @@ export default {
                 { id: 2, content: '李四在2024-09-04提交了一份申请' },
             ],
 
+            
         }
     },
     methods: {
@@ -94,6 +106,8 @@ export default {
                 console.error('获取用户信息失败:', error);
             }
         },
+
+        
        
     },
     created() {
@@ -112,7 +126,6 @@ export default {
     flex: 1;
     padding: 25px; /* 增加 padding */
 }
-
 
 
 </style>
