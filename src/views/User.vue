@@ -23,12 +23,17 @@
                     <ClaimInfo />
                 </div>
 
-                <div v-else-if="activeMenu === '6'">
+                <div v-else-if="activeMenu == '6'">
                     <!--违规原因维护-->
                     <ReasonMaintenance />
                 </div>
 
-                <div v-else-if="activeMenu === '8'">
+                <div v-else-if="activeMenu == '7'">
+                    <!--统计视图-->
+                    <StaticsComponent />
+                </div>
+
+                <div v-else-if="activeMenu == '8'">
                     <UserCenter 
                         :userInfo="userInfo" 
                         :passwordChangeUrl="'http://localhost:8080/api/auth/user/editPassword'" 
@@ -47,7 +52,9 @@ import WelcomeComponent from '../components/Welcome.vue';
 import ReasonMaintenance from '../components/ReasonMaintenance.vue';
 import ClaimInfo from '../components/ClaimInfo.vue';
 import UserCenter from '../components/UserCenter.vue';
+import StaticsComponent from '../components/Satistics.vue'
 import axios from 'axios';
+
 
 export default {
     name: 'UserView',
@@ -57,7 +64,8 @@ export default {
         WelcomeComponent ,
         ReasonMaintenance,
         ClaimInfo,
-        UserCenter
+        UserCenter,
+        StaticsComponent
     },
     data() {
         return {
@@ -72,8 +80,6 @@ export default {
                 { id: 1, content: '张三在2024-09-03提交了一份申请' },
                 { id: 2, content: '李四在2024-09-04提交了一份申请' },
             ],
-
-            
         }
     },
     methods: {
@@ -106,13 +112,11 @@ export default {
                 console.error('获取用户信息失败:', error);
             }
         },
-
-        
-       
     },
     created() {
         this.fetchUserInfo(); // 在组件创建时获取用户信息
-    }
+    },
+    
 };
 </script>
 
