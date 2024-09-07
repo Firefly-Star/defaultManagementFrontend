@@ -201,6 +201,10 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
 }
 
+.search .el-form {
+    margin-bottom: 25px; /* 增加底部间距 */
+}
+
 .add-button {
     text-align: right; /* 新增按钮右对齐 */
 }
