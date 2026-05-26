@@ -118,7 +118,7 @@ export default {
                     type: this.claimInformationFilterForm.type === "全部" ? null : this.claimInformationFilterForm.type
                 };
 
-                const response = await fetch('http://localhost:8080/api/admin/claims', {
+                const response = await fetch(this.$apiBase + '/api/admin/claims', {
                     method: 'POST',
                     headers: {
                         'adminToken': token,
@@ -147,7 +147,7 @@ export default {
                     reviewStatus: row.reviewStatus
                 };
 
-                const response = await fetch('http://localhost:8080/api/admin/claim-reviews', {
+                const response = await fetch(this.$apiBase + '/api/admin/claim-reviews', {
                     method: 'POST',
                     headers: {
                         'adminToken': adminToken,

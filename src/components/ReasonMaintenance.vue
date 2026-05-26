@@ -101,7 +101,7 @@ export default {
                 };
 
                 try {
-                    const response = await fetch('http://localhost:8080/api/admin/editReason', {
+                    const response = await fetch(this.$apiBase + '/api/admin/editReason', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json', // 设置请求体格式为 JSON
@@ -134,7 +134,7 @@ export default {
 
                 try {
                     // 发送 POST 请求
-                    const response = await fetch('http://localhost:8080/api/admin/addReason', {
+                    const response = await fetch(this.$apiBase + '/api/admin/addReason', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json', // 设置请求体格式为 JSON
@@ -162,7 +162,7 @@ export default {
         async applyDefaultReasonFilter() {
             try {
                 const adminToken = localStorage.getItem('adminToken');
-                const response = await fetch("http://localhost:8080/api/admin/reasons", {
+                const response = await fetch(this.$apiBase + "/api/admin/reasons", {
                     method: 'POST', // 使用 POST 方法
                     headers: {
                         'Content-Type': 'application/json', // 设置请求体格式为 JSON

@@ -11,6 +11,9 @@ Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
+const API_BASE = process.env.VUE_APP_API_BASE || '';
+Vue.prototype.$apiBase = API_BASE;
+
 new Vue({
   router, // 注入路由
   render: h => h(App)

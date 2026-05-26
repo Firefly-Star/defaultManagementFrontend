@@ -64,7 +64,7 @@ export default{
 
             try {
                 // 获取行业统计数据
-                const industryResponse = await fetch('http://localhost:8080/api/admin/analysis/industry', {
+                const industryResponse = await fetch(this.$apiBase + '/api/admin/analysis/industry', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export default{
                 
 
                 // 获取区域统计数据
-                const areaResponse = await fetch('http://localhost:8080/api/admin/analysis/area', {
+                const areaResponse = await fetch(this.$apiBase + '/api/admin/analysis/area', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export default{
                 this.areaData = areaData.data;
 
                 // 获取总统计数据
-                const totalResponse = await fetch('http://localhost:8080/api/admin/analysis/total', {
+                const totalResponse = await fetch(this.$apiBase + '/api/admin/analysis/total', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',

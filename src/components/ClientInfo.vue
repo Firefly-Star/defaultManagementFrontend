@@ -123,7 +123,7 @@ export default {
                     status: this.clientFilterForm.status == "全部" ? null : this.clientFilterForm.status
                 }
 
-                const response = await fetch('http://localhost:8080/api/user/client', {
+                const response = await fetch(this.$apiBase + '/api/user/client', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ export default {
         async fetchReasons() {
             try {
                 const token = localStorage.getItem('userToken');
-                const response = await fetch('http://localhost:8080/api/user/reasons', {
+                const response = await fetch(this.$apiBase + '/api/user/reasons', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -192,7 +192,7 @@ export default {
                     type: this.claimForm.type
                 };
 
-                const response = await fetch('http://localhost:8080/api/user/claim', {
+                const response = await fetch(this.$apiBase + '/api/user/claim', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

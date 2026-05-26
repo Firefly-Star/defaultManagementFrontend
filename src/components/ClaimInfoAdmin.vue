@@ -129,7 +129,7 @@ export default{
                 };
 
                 // 发送 GET 请求到后端获取申请信息
-                const response = await fetch('http://localhost:8080/api/admin/claims', {
+                const response = await fetch(this.$apiBase + '/api/admin/claims', {
                     method: 'POST',
                     headers: {
                         'adminToken': token,

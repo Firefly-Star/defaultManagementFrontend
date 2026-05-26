@@ -29,9 +29,9 @@
                 </div>
 
                 <div v-else-if="activeMenu == '3'">
-                    <UserCenter 
-                        :userInfo="userInfo" 
-                        :passwordChangeUrl="'http://localhost:8080/api/auth/user/editPassword'" 
+                    <UserCenter
+                        :userInfo="userInfo"
+                        :passwordChangeUrl="apiBase + '/api/auth/user/editPassword'"
                     />
                 </div>
             </div>
@@ -41,8 +41,8 @@
 
 <script>
 import Header from '../components/HeaderComponent.vue';
-import SideMenu from '../components/SideMenu.vue'; 
-import WelcomeComponent from '../components/Welcome.vue'; 
+import SideMenu from '../components/SideMenu.vue';
+import WelcomeComponent from '../components/Welcome.vue';
 import ClaimInfo from '../components/ClaimInfo.vue';
 import UserCenter from '../components/UserCenter.vue';
 import ClientSearch from '../components/ClientInfo.vue';
@@ -61,6 +61,7 @@ export default {
     },
     data() {
         return {
+            apiBase: process.env.VUE_APP_API_BASE || '',
             userInfo: {
                 id: '12345',
                 name: '张三',
@@ -84,9 +85,9 @@ export default {
             try {
                 // 从 localStorage 中获取 token
                 const token = localStorage.getItem('userToken');
-                
+
                 // 发送 GET 请求到后端获取用户信息
-                const response = await axios.get('http://localhost:8080/api/user/info', {
+                const response = await axios.get(this.apiBase + '/api/user/info', {
                     headers: {
                         'userToken': token  // 将 token 作为请求头发送
                     }

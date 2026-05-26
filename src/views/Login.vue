@@ -112,7 +112,7 @@
                             password: this.form.password  // 假设 this.form 中有 password 字段
                         };
 
-                        const response = await fetch("http://localhost:8080/api/auth/user/login", {
+                        const response = await fetch(this.$apiBase + "/api/auth/user/login", {
                             method: 'POST', // 使用 POST 方法
                             headers: {
                                 'Content-Type': 'application/json', // 设置请求体格式为 JSON
@@ -151,7 +151,7 @@
                             password: this.form.password  
                         };
 
-                        const response = await fetch("http://localhost:8080/api/auth/admin/login", {
+                        const response = await fetch(this.$apiBase + "/api/auth/admin/login", {
                             method: 'POST', // 使用 POST 方法
                             headers: {
                                 'Content-Type': 'application/json', // 设置请求体格式为 JSON
@@ -202,7 +202,7 @@
                             email : this.form.email,
                             name : this.form.name
                         }
-                        const response = await fetch("http://localhost:8080/api/auth/user/register", {
+                        const response = await fetch(this.$apiBase + "/api/auth/user/register", {
                             method: 'POST', // 使用 POST 方法
                             headers: {
                                 'Content-Type': 'application/json', // 设置请求体格式为 JSON
@@ -237,7 +237,7 @@
                             email : this.form.email,
                             name : this.form.name
                         }
-                        const response = await fetch("http://localhost:8080/api/auth/admin/register", {
+                        const response = await fetch(this.$apiBase + "/api/auth/admin/register", {
                             method: 'POST', // 使用 POST 方法
                             headers: {
                                 'Content-Type': 'application/json', // 设置请求体格式为 JSON
